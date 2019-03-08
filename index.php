@@ -81,57 +81,6 @@ if($USER->auth>0) {
 	</div>
 </div>
 
-<div class="row">
-	<br>
-	<div class="large-12 columns">
-		<div class="card">
-			<div class="card-divider">
-				Clarity LIMS sync status
-			</div>
-			<div class="card-section large-12 columns">
-				<p>Update database with LIMS information of labs and researchers that will be used when trawling for publications. <br>Please check for and correct <a href="researchers.php?lab_status=error">errors</a> before starting trawl!</p>
-				<hr>
-				<div class="large-6 columns" id="clarity_status"></div>
-				<div class="large-6 columns" id="clarity_status_message"></div>
-			</div>
-			<div class="card-section large-12 columns">
-				<div class="button-group">
-					<button class="small button right" id="load_clarity">Update</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<br>
-	<div class="large-12 columns">
-		<div class="card">
-			<div class="card-divider">
-				Pubtrawl status
-			</div>
-			<div class="card-section">
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<br>
-	<div class="large-12 columns">
-		<div class="card">
-			<div class="card-divider">
-				SciLifeLab Publication database sync status
-			</div>
-			<div class="card-section">
-				<p>This will fetch all NGI Stockholm publications stored at <a href="https://publications.scilifelab.se/">publications.scilifelab.se</a> and mark each of them accordingly in this database.</p>
-				<span class="start_sync button">Begin syncing from publications.scilifelab.se</span>
-				<div id="sync_status_message"></div>
-			</div>
-		</div>
-	</div>
-</div>
-
 <script src="js/vendor/jquery.js"></script>
 <script src="js/vendor/what-input.js"></script>
 <script src="js/vendor/foundation.js"></script>

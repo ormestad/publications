@@ -1,5 +1,5 @@
 <?php
-	
+
 /*
 ------------------------------------------------------------------------------------
 PHPMed
@@ -11,7 +11,7 @@ Based on: https://github.com/asifr/PHP-PubMed-API-Wrapper and http://www.fredtro
 
 
 
-------------------------------------------------------------------------------------		
+------------------------------------------------------------------------------------
 */
 
 class PHPMed {
@@ -24,7 +24,7 @@ class PHPMed {
 	private $esearch = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?';
 	private $esummary = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?';
 	private $efetch = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?';
-	
+
 	// Format and return an array with all hits (raw data from pubmed API)
 	// If publication has an abstract this is added as a new key ['abstract']
 	public function parsedSearch($term) {
@@ -46,11 +46,11 @@ class PHPMed {
 			'retstart'	=> $this->retstart,
 			'term'		=> $term
 		);
-		
+
 		$url=$this->esearch.http_build_query($params);
 		return $this->getJSON($url);
 	}
-	
+
 	// $pmid - either a single id or a comma separated list (or an array of PMID's)
 	public function summary($pmid) {
 		$count=0;
@@ -85,24 +85,24 @@ class PHPMed {
 			}
 			$count++;
 		}
-		
+
 		return $articles;
 	}
-	
+
 	private function getAbstract($pmid) {
 		$params = array(
 			'db'		=> $this->db,
 			'retmode'	=> 'text',
-			'rettype'	=> 'abstract', 
+			'rettype'	=> 'abstract',
 			'retmax'	=> 1,
 			'id'		=> $pmid
 		);
-		
+
 		$url=$this->efetch.http_build_query($params);
 		$data=file_get_contents($url);
 		return $data;
 	}
-		
+
 	private function getJSON($url) {
 		$error=FALSE;
 

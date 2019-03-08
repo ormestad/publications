@@ -1,7 +1,7 @@
 <?php
 require 'lib/global.php';
 
-if($USER->auth>0) {
+if($USER->auth>1) {
 	$pubmed=new PHPMed();
 	$publications=new NGIpublications();
 	//----------------------------------------------------

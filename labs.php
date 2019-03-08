@@ -10,22 +10,22 @@ if($USER->auth>0) {
 		$affiliation_select[$affiliation['id']]=$affiliation['name'];
 	}
 
-	$filterform=new htmlForm("researchers.php","get",4);
-	$filterform->addSelect("Order by","order_by",array('last_name' => 'Last name', 'first_name' => 'First name'),$_GET);
+	$filterform=new htmlForm("labs.php","get",6);
+	$filterform->addSelect("Status","lab_status",array('all' => 'All', 'active' => 'Active labs', 'error' => 'Contains errors', 'disabled' => 'Disabled'),$_GET);
+	$filterform->addSelect("Affiliation","lab_affiliation",$affiliation_select,$_GET);
+	$filterform->addSelect("Order by","order_by",array('lab_name' => 'Lab name', 'lab_affiliation' => 'Affiliation'),$_GET);
 	$filterform->addSelect("Sort","sort",array('asc' => 'Ascending', 'desc' => 'Descending'),$_GET);
-	$filterform->addInput("Search by Last Name",array('type' => 'search', 'name' => 'last_name'), $_GET);
+	$filterform->addInput("Lab Name",array('type' => 'search', 'name' => 'lab_name'), $_GET);
 	$filterform->addInput("<br/>",array('type' => 'submit', 'name' => 'submit', 'value' => 'Filter search', 'class' => 'button'));
-
-	$query_string="SELECT * FROM researchers";
 
 	switch($_GET['order_by']) {
 		default:
-		case 'last_name':
-			$order_string=" ORDER BY last_name";
+		case 'lab_name':
+			$order_string=" ORDER BY lab_name";
 		break;
 
-		case 'first_name':
-			$order_string=" ORDER BY first_name";
+		case 'lab_affiliation':
+			$order_string=" ORDER BY lab_affiliation";
 		break;
 	}
 
@@ -39,18 +39,46 @@ if($USER->auth>0) {
 			$order_string.=" DESC";
 		break;
 	}
-	if ($_GET['last_name']) {
-		$last_name = trim($DB->real_escape_string( $_GET['last_name'] ));
-		$filters[]="last_name='".$last_name."'";
+
+	switch($_GET['lab_status']) {
+		default:
+		case 'all':
+			$filters=array();
+		break;
+
+		case 'active':
+			$filters[]="lab_status='active'";
+		break;
+
+		case 'error':
+			$filters[]="lab_status='error'";
+		break;
+
+		case 'disabled':
+			$filters[]="lab_status='disabled'";
+		break;
 	}
+
+	if($_GET['lab_name']) {
+		$lab_name = trim($DB->real_escape_string( $_GET['lab_name'] ));
+		$filters[]="lab_name LIKE '%".$lab_name."%'";
+	}
+
+	// Only add if value exists in Affiliation table
+	$lab_affiliation=filter_var($_GET['lab_affiliation'],FILTER_SANITIZE_MAGIC_QUOTES);
+	if(array_key_exists($lab_affiliation, $affiliation_select) && $lab_affiliation!='0') {
+		$lab_affiliation = trim($DB->real_escape_string( $lab_affiliation ));
+		$filters[]="lab_affiliation='$lab_affiliation'";
+	}
+
+	$query_string="SELECT * FROM labs";
 
 	if(count($filters)>0) {
 		$query_string.=' WHERE '.implode(' AND ',$filters);
 	}
 
 	$query=sql_query($query_string.$order_string);
-	/* $researcher_list=$researchers->listResearchers($query,$_GET['page']); */
-	$researcher_formatted=$researchers->showResearcherList($query, $_GET['page']);
+	$lab_list=$researchers->showLabList($query,$_GET['page']);
 } else {
 	// Not logged in
 	header('Location:login.php');
@@ -82,10 +110,10 @@ if($USER->auth>0) {
 		<?php echo $filterform->render(); ?>
 	</div>
 	<div class="large-12 columns">
-		<?php echo $researcher_formatted['list']; ?>
+		<?php echo $lab_list['list']; ?>
 	</div>
 	<div class="large-12 columns">
-		<?php echo $researcher_formatted['pagination']; ?>
+		<?php echo $lab_list['pagination']; ?>
 	</div>
 </div>
 

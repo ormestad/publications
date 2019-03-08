@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.38)
 # Database: publications
-# Generation Time: 2018-10-12 11:30:32 +0000
+# Generation Time: 2018-10-23 10:36:15 +0000
 # ************************************************************
 
 
@@ -101,8 +101,25 @@ CREATE TABLE `publications` (
   `abstract` text,
   `authors` text,
   `status` varchar(20) DEFAULT NULL,
+  `reservation_user` varchar(100) DEFAULT NULL,
+  `reservation_timestamp` int(10) DEFAULT NULL,
   `comments` text,
   `log` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table publications_text
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `publications_text`;
+
+CREATE TABLE `publications_text` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `publication_id` int(11) DEFAULT NULL,
+  `status` varchar(11) DEFAULT NULL,
+  `text` longtext,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -7,7 +7,15 @@
 }
 
 .button, .label {
-	-webkit-border-radius: 2px; 
-	-moz-border-radius: 2px; 
-	border-radius: 2px; 
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+#how_to_info {
+	padding-right: 20px;
+}
+
+.publication_label_link {
+	color: white;
 }

@@ -38,9 +38,15 @@ if(isset($_POST['user_email']) && isset($_POST['p'])) {
 
 <div class="row">
 <br>
-<div class="large-12 columns">
-<?php echo $html; ?>
-</div>
+	<div class="large-6 columns">
+	<?php echo $html; ?>
+	</div>
+
+	<div class="large-5 large-offset-1 columns">
+		<h3>Register</h3>
+		If you are not yet a user of ngipubs, please: </br></br>
+		<a class='button' href="/signup.php">Sign Up</a>
+	</div>
 </div>
 
 <script src="js/vendor/jquery.js"></script>
